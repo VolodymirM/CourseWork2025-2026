@@ -1,5 +1,4 @@
 import os
-
 from transformers import (
     AutoTokenizer, 
     AutoModelForCausalLM, 
@@ -15,14 +14,16 @@ tokenizer.pad_token = tokenizer.eos_token
 
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
-train_files = [os.path.join("trainingdata", f) for f in os.listdir("trainingdata") if f.endswith(".data")]
+script_dir = os.path.dirname(os.path.abspath(__file__))
+trainingdata_dir = os.path.join(script_dir, "trainingdata")
+train_files = [os.path.join(trainingdata_dir, f) for f in os.listdir(trainingdata_dir) if f.endswith(".data")]
 dataset = load_dataset("text", data_files={"train": train_files})
 
 def tokenize_function(example):
     return tokenizer(
         example["text"],
         truncation=True,
-        max_length=1024,
+        max_length=512,
         padding="max_length"
     )
 
@@ -39,7 +40,8 @@ training_args = TrainingArguments(
     save_steps=100,
     save_total_limit=1,
     logging_steps=20,
-    report_to="none"
+    report_to="none",
+    fp16=True
 )
 
 trainer = Trainer(
