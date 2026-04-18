@@ -34596,3 +34596,220 @@ Go to File > Settings > Languages & Frameworks > TypeScript:
 
 TypeScript Version: If you installed with npm: C:\Users\USERNAME\AppData\Roaming\npm\node_modules\typescript\lib
 <END>
+
+TypeScript for the New Programmer
+Congratulations on choosing TypeScript as one of your first languages — you’re already making good decisions!
+
+You’ve probably already heard that TypeScript is a “flavor” or “variant” of JavaScript. The relationship between TypeScript (TS) and JavaScript (JS) is rather unique among modern programming languages, so learning more about this relationship will help you understand how TypeScript adds to JavaScript.
+
+What is JavaScript? A Brief History
+JavaScript (also known as ECMAScript) started its life as a simple scripting language for browsers. At the time it was invented, it was expected to be used for short snippets of code embedded in a web page — writing more than a few dozen lines of code would have been somewhat unusual. Due to this, early web browsers executed such code pretty slowly. Over time, though, JS became more and more popular, and web developers started using it to create interactive experiences.
+
+Web browser developers responded to this increased JS usage by optimizing their execution engines (dynamic compilation) and extending what could be done with it (adding APIs), which in turn made web developers use it even more. On modern websites, your browser is frequently running applications that span hundreds of thousands of lines of code. This is the long and gradual growth of “the web”, starting as a simple network of static pages, and evolving into a platform for rich applications of all kinds.
+
+More than this, JS has become popular enough to be used outside the context of browsers, such as implementing JS servers using node.js. The “run anywhere” nature of JS makes it an attractive choice for cross-platform development. There are many developers these days that use only JavaScript to program their entire stack!
+
+To summarize, we have a language that was designed for quick uses, and then grew to a full-fledged tool to write applications with millions of lines. Every language has its own quirks — oddities and surprises, and JavaScript’s humble beginning makes it have many of these. Some examples:
+
+JavaScript’s equality operator (==) coerces its operands, leading to unexpected behavior:
+
+if ("" == 0) {
+  // It is! But why??
+}
+if (1 < x < 3) {
+  // True for *any* value of x!
+}
+JavaScript also allows accessing properties which aren’t present:
+
+const obj = { width: 10, height: 15 };
+// Why is this NaN? Spelling is hard!
+const area = obj.width * obj.heigth;
+Most programming languages would throw an error when these sorts of errors occur, some would do so during compilation — before any code is running. When writing small programs, such quirks are annoying but manageable; when writing applications with hundreds or thousands of lines of code, these constant surprises are a serious problem.
+
+TypeScript: A Static Type Checker
+We said earlier that some languages wouldn’t allow those buggy programs to run at all. Detecting errors in code without running it is referred to as static checking. Determining what’s an error and what’s not based on the kinds of values being operated on is known as static type checking.
+
+TypeScript checks a program for errors before execution, and does so based on the kinds of values, making it a static type checker. For example, the last example above has an error because of the type of obj. Here’s the error TypeScript found:
+
+const obj = { width: 10, height: 15 };
+const area = obj.width * obj.heigth;
+Property 'heigth' does not exist on type '{ width: number; height: number; }'. Did you mean 'height'?
+Try
+A Typed Superset of JavaScript
+How does TypeScript relate to JavaScript, though?
+
+Syntax
+TypeScript is a language that is a superset of JavaScript: JS syntax is therefore legal TS. Syntax refers to the way we write text to form a program. For example, this code has a syntax error because it’s missing a ):
+
+let a = (4
+')' expected.
+Try
+TypeScript doesn’t consider any JavaScript code to be an error because of its syntax. This means you can take any working JavaScript code and put it in a TypeScript file without worrying about exactly how it is written.
+
+Types
+However, TypeScript is a typed superset, meaning that it adds rules about how different kinds of values can be used. The earlier error about obj.heigth was not a syntax error: it is an error of using some kind of value (a type) in an incorrect way.
+
+As another example, this is JavaScript code that you can run in your browser, and it will log a value:
+
+console.log(4 / []);
+This syntactically-legal program logs Infinity. TypeScript, though, considers division of number by an array to be a nonsensical operation, and will issue an error:
+
+console.log(4 / []);
+The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+Try
+It’s possible you really did intend to divide a number by an array, perhaps just to see what happens, but most of the time, though, this is a programming mistake. TypeScript’s type checker is designed to allow correct programs through while still catching as many common errors as possible. (Later, we’ll learn about settings you can use to configure how strictly TypeScript checks your code.)
+
+If you move some code from a JavaScript file to a TypeScript file, you might see type errors depending on how the code is written. These may be legitimate problems with the code, or TypeScript being overly conservative. Throughout this guide we’ll demonstrate how to add various TypeScript syntax to eliminate such errors.
+
+Runtime Behavior
+TypeScript is also a programming language that preserves the runtime behavior of JavaScript. For example, dividing by zero in JavaScript produces Infinity instead of throwing a runtime exception. As a principle, TypeScript never changes the runtime behavior of JavaScript code.
+
+This means that if you move code from JavaScript to TypeScript, it is guaranteed to run the same way, even if TypeScript thinks that the code has type errors.
+
+Keeping the same runtime behavior as JavaScript is a foundational promise of TypeScript because it means you can easily transition between the two languages without worrying about subtle differences that might make your program stop working.
+
+Erased Types
+Roughly speaking, once TypeScript’s compiler is done with checking your code, it erases the types to produce the resulting “compiled” code. This means that once your code is compiled, the resulting plain JS code has no type information.
+
+This also means that TypeScript never changes the behavior of your program based on the types it inferred. The bottom line is that while you might see type errors during compilation, the type system itself has no bearing on how your program works when it runs.
+
+Finally, TypeScript doesn’t provide any additional runtime libraries. Your programs will use the same standard library (or external libraries) as JavaScript programs, so there’s no additional TypeScript-specific framework to learn.
+
+Learning JavaScript and TypeScript
+We frequently see the question “Should I learn JavaScript or TypeScript?“.
+
+The answer is that you can’t learn TypeScript without learning JavaScript! TypeScript shares syntax and runtime behavior with JavaScript, so anything you learn about JavaScript is helping you learn TypeScript at the same time.
+
+There are many, many resources available for programmers to learn JavaScript; you should not ignore these resources if you’re writing TypeScript. For example, there are about 20 times more StackOverflow questions tagged javascript than typescript, but all of the javascript questions also apply to TypeScript.
+
+If you find yourself searching for something like “how to sort a list in TypeScript”, remember: TypeScript is JavaScript’s runtime with a compile-time type checker. The way you sort a list in TypeScript is the same way you do so in JavaScript. If you find a resource that uses TypeScript directly, that’s great too, but don’t limit yourself to thinking you need TypeScript-specific answers for everyday questions about how to accomplish runtime tasks.
+<END>
+
+TypeScript for Java/C# Programmers
+TypeScript is a popular choice for programmers accustomed to other languages with static typing, such as C# and Java.
+
+TypeScript’s type system offers many of the same benefits, such as better code completion, earlier detection of errors, and clearer communication between parts of your program. While TypeScript provides many familiar features for these developers, it’s worth stepping back to see how JavaScript (and therefore TypeScript) differ from traditional OOP languages. Understanding these differences will help you write better JavaScript code, and avoid common pitfalls that programmers who go straight from C#/Java to TypeScript may fall into.
+
+Co-learning JavaScript
+If you’re familiar with JavaScript already but are primarily a Java or C# programmer, this introductory page can help explain some of the common misconceptions and pitfalls you might be susceptible to. Some of the ways that TypeScript models types are quite different from Java or C#, and it’s important to keep these in mind when learning TypeScript.
+
+If you’re a Java or C# programmer that is new to JavaScript in general, we recommend learning a little bit of JavaScript without types first to understand JavaScript’s runtime behaviors. Because TypeScript doesn’t change how your code runs, you’ll still have to learn how JavaScript works in order to write code that actually does something!
+
+It’s important to remember that TypeScript uses the same runtime as JavaScript, so any resources about how to accomplish specific runtime behavior (converting a string to a number, displaying an alert, writing a file to disk, etc.) will always apply equally well to TypeScript programs. Don’t limit yourself to TypeScript-specific resources!
+
+Rethinking the Class
+C# and Java are what we might call mandatory OOP languages. In these languages, the class is the basic unit of code organization, and also the basic container of all data and behavior at runtime. Forcing all functionality and data to be held in classes can be a good domain model for some problems, but not every domain needs to be represented this way.
+
+Free Functions and Data
+In JavaScript, functions can live anywhere, and data can be passed around freely without being inside a pre-defined class or struct. This flexibility is extremely powerful. “Free” functions (those not associated with a class) working over data without an implied OOP hierarchy tend to be the preferred model for writing programs in JavaScript.
+
+Static Classes
+Additionally, certain constructs from C# and Java such as singletons and static classes are unnecessary in TypeScript.
+
+OOP in TypeScript
+That said, you can still use classes if you like! Some problems are well-suited to being solved by a traditional OOP hierarchy, and TypeScript’s support for JavaScript classes will make these models even more powerful. TypeScript supports many common patterns such as implementing interfaces, inheritance, and static methods.
+
+We’ll cover classes later in this guide.
+
+Rethinking Types
+TypeScript’s understanding of a type is actually quite different from C# or Java’s. Let’s explore some differences.
+
+Nominal Reified Type Systems
+In C# or Java, any given value or object has one exact type - either null, a primitive, or a known class type. We can call methods like value.GetType() or value.getClass() to query the exact type at runtime. The definition of this type will reside in a class somewhere with some name, and we can’t use two classes with similar shapes in lieu of each other unless there’s an explicit inheritance relationship or commonly-implemented interface.
+
+These aspects describe a reified, nominal type system. The types we wrote in the code are present at runtime, and the types are related via their declarations, not their structures.
+
+Types as Sets
+In C# or Java, it’s meaningful to think of a one-to-one correspondence between runtime types and their compile-time declarations.
+
+In TypeScript, it’s better to think of a type as a set of values that share something in common. Because types are just sets, a particular value can belong to many sets at the same time.
+
+Once you start thinking of types as sets, certain operations become very natural. For example, in C#, it’s awkward to pass around a value that is either a string or int, because there isn’t a single type that represents this sort of value.
+
+In TypeScript, this becomes very natural once you realize that every type is just a set. How do you describe a value that either belongs in the string set or the number set? It simply belongs to the union of those sets: string | number.
+
+TypeScript provides a number of mechanisms to work with types in a set-theoretic way, and you’ll find them more intuitive if you think of types as sets.
+
+Erased Structural Types
+In TypeScript, objects are not of a single exact type. For example, if we construct an object that satisfies an interface, we can use that object where that interface is expected even though there was no declarative relationship between the two.
+
+interface Pointlike {
+  x: number;
+  y: number;
+}
+interface Named {
+  name: string;
+}
+ 
+function logPoint(point: Pointlike) {
+  console.log("x = " + point.x + ", y = " + point.y);
+}
+ 
+function logName(x: Named) {
+  console.log("Hello, " + x.name);
+}
+ 
+const obj = {
+  x: 0,
+  y: 0,
+  name: "Origin",
+};
+ 
+logPoint(obj);
+logName(obj);
+Try
+TypeScript’s type system is structural, not nominal: We can use obj as a Pointlike because it has x and y properties that are both numbers. The relationships between types are determined by the properties they contain, not whether they were declared with some particular relationship.
+
+TypeScript’s type system is also not reified: There’s nothing at runtime that will tell us that obj is Pointlike. In fact, the Pointlike type is not present in any form at runtime.
+
+Going back to the idea of types as sets, we can think of obj as being a member of both the Pointlike set of values and the Named set of values.
+
+Consequences of Structural Typing
+OOP programmers are often surprised by two particular aspects of structural typing.
+
+Empty Types
+The first is that the empty type seems to defy expectation:
+
+class Empty {}
+ 
+function fn(arg: Empty) {
+  // do something?
+}
+ 
+// No error, but this isn't an 'Empty' ?
+fn({ k: 10 });
+Try
+TypeScript determines if the call to fn here is valid by seeing if the provided argument is a valid Empty. It does so by examining the structure of { k: 10 } and class Empty { }. We can see that { k: 10 } has all of the properties that Empty does, because Empty has no properties. Therefore, this is a valid call!
+
+This may seem surprising, but it’s ultimately a very similar relationship to one enforced in nominal OOP languages. A subclass cannot remove a property of its base class, because doing so would destroy the natural subtype relationship between the derived class and its base. Structural type systems simply identify this relationship implicitly by describing subtypes in terms of having properties of compatible types.
+
+Identical Types
+Another frequent source of surprise comes with identical types:
+
+class Car {
+  drive() {
+    // hit the gas
+  }
+}
+class Golfer {
+  drive() {
+    // hit the ball far
+  }
+}
+// No error?
+let w: Car = new Golfer();
+Again, this isn’t an error because the structures of these classes are the same. While this may seem like a potential source of confusion, in practice, identical classes that shouldn’t be related are not common.
+
+We’ll learn more about how classes relate to each other in the Classes chapter.
+
+Reflection
+OOP programmers are accustomed to being able to query the type of any value, even a generic one:
+
+// C#
+static void LogType<T>() {
+    Console.WriteLine(typeof(T).Name);
+}
+Because TypeScript’s type system is fully erased, information about e.g. the instantiation of a generic type parameter is not available at runtime.
+
+JavaScript does have some limited primitives like typeof and instanceof, but remember that these operators are still working on the values as they exist in the type-erased output code. For example, typeof (new Car()) will be "object", not Car or "Car".
+<END>
