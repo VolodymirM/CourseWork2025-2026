@@ -1,0 +1,25 @@
+Create a full-stack e-commerce web application using Spring Boot and Angular.
+
+Backend:
+- Spring Boot, Spring Data JPA, Spring Security, JWT
+- Entities: User, Product, Category, Cart, Order
+- REST APIs for authentication, product browsing, cart management, and order placement
+- Validation and global exception handling
+
+Frontend:
+- Angular with TypeScript
+- Components for login, registration, products, cart, checkout, and admin panel
+- Reactive forms, guards, interceptor, routing
+- Connect all pages to backend using HttpClient
+
+Business rules:
+- Only ADMIN can manage products and categories
+- USER can browse products, add items to cart, and place orders
+- Prevent ordering out-of-stock products
+
+Output:
+- Project structure
+- Backend code
+- Frontend code
+- Sample requests/responses
+- Run instructions

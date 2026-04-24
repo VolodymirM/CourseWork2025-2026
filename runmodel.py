@@ -5,6 +5,7 @@ model = AutoModelForCausalLM.from_pretrained("./gpt2-finetuned")
 
 prompt = "What is an object?"
 inputs = tokenizer(prompt, return_tensors="pt")
+
 outputs = model.generate(
     **inputs,
     max_length=512,
@@ -13,4 +14,7 @@ outputs = model.generate(
     top_k=50,
     top_p=0.95
 )
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+
+generated_tokens = outputs[0][inputs["input_ids"].shape[1]:]
+result = tokenizer.decode(generated_tokens, skip_special_tokens=True)
+print(result)
