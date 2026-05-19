@@ -818,4 +818,3 @@ You may have noticed that junit-4.11.jar was a dependency, but didn't end up in 
 
 The final step was to include a parent definition. This ensures that the POM can always be located even if the project is distributed separately from its parent by looking it up in the repository.
 <END>
-

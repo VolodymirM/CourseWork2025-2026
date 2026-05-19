@@ -1,24 +1,26 @@
 import os
 from transformers import (
-    AutoTokenizer, 
-    AutoModelForCausalLM, 
-    DataCollatorForLanguageModeling, 
-    Trainer, 
-    TrainingArguments
+    AutoTokenizer,
+    AutoModelForCausalLM,
+    DataCollatorForLanguageModeling,
+    Trainer,
+    TrainingArguments,
 )
 from datasets import load_dataset
 
-model_name = "gpt2"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+checkpoint_path = os.path.join(script_dir, "gpt2-finetuned", "checkpoint-7200")
+
+tokenizer = AutoTokenizer.from_pretrained(checkpoint_path)
 tokenizer.pad_token = tokenizer.eos_token
 
-model = AutoModelForCausalLM.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(checkpoint_path)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 trainingdata_dir = os.path.join(script_dir, "trainingdata")
 
 extensions = [
-    ".data", 
+    ".data",
     ".html", ".css", ".java", ".ts", ".js", ".json", ".xml"
 ]
 
@@ -91,6 +93,6 @@ trainer = Trainer(
     data_collator=data_collator,
 )
 
-trainer.train()
+trainer.train(resume_from_checkpoint=checkpoint_path)
 trainer.save_model("./gpt2-finetuned")
 tokenizer.save_pretrained("./gpt2-finetuned")
